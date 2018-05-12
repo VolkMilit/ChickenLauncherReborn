@@ -10,7 +10,12 @@ Rewrite [my old](https://github.com/VolkMilit/ChickenLauncher) launcher from scr
 * [License](#license)
 
 ### Screenshots
-todo
+
+<p align="center">
+  <img src="screenshots/tab_profiles.png?raw=true" alt="Main screenshot"/>
+  <img src="screenshots/tab_wads.png?raw=true" width="250px" height="140px" alt="Wads tab"/>
+  <img src="screenshots/tab_settings.png?raw=true" width="250px" height="140px" alt="Settings tab"/>
+</p>
 
 ### Dependencies
 - Compiller with C++11 support
