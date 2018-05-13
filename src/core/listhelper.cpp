@@ -68,6 +68,9 @@ void ListHelper::moveDown(QListWidget *widget)
 
 void ListHelper::selectItem(QListWidget *widget, const QString &item)
 {
+    QFont font;
+    font.setBold(true);
+
     for (auto i = 0; i < widget->count(); i++)
     {
         QListWidgetItem *witem = widget->item(i);
@@ -75,6 +78,7 @@ void ListHelper::selectItem(QListWidget *widget, const QString &item)
         if (witem->text().contains(item))
         {
             witem->setSelected(true);
+            witem->setFont(font);
             widget->setCurrentItem(witem);
         }
     }
@@ -82,11 +86,17 @@ void ListHelper::selectItem(QListWidget *widget, const QString &item)
 
 void ListHelper::selectItem(QListWidget *widget, const QString &item, Qt::CheckState checked)
 {
+    QFont font;
+    font.setBold(true);
+
     for (auto i = 0; i < widget->count(); i++)
     {
         QListWidgetItem *witem = widget->item(i);
 
         if (witem->text() == item)
+        {
             witem->setCheckState(checked);
+            witem->setFont(font);
+        }
     }
 }

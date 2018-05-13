@@ -47,6 +47,12 @@ class MainWindow : public QMainWindow
 
         void on_btn_ripandtear_clicked();
 
+        void on_lw_pwad_itemChanged(QListWidgetItem *item);
+
+        void on_lw_iwad_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+        void on_lw_port_config_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
 private:
         Ui::MainWindow *ui;
 

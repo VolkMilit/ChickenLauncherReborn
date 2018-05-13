@@ -3,6 +3,7 @@
 
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QFont>
 
 class ListHelper
 {

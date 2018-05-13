@@ -163,10 +163,18 @@ void MainWindow::on_btn_profiles_clone_clicked()
 
 void MainWindow::on_btn_profiles_load_clicked()
 {
+    TableHelper::setStandartFont(ui->tw_profiles);
+
     writeSettings();
 
+    QFont font;
+    font.setBold(true);
+    int row = ui->tw_profiles->currentRow();
+
     Settings settings;
-    settings.setCurrentProfile(ui->tw_profiles->item(ui->tw_profiles->currentRow(), 0)->text());
+    settings.setCurrentProfile(ui->tw_profiles->item(row, 0)->text());
+    ui->tw_profiles->item(row, 0)->setFont(font);
+    ui->tw_profiles->item(row, 1)->setFont(font);
 
     checkedItems.clear();
     ui->lw_iwad->clear();
@@ -337,11 +345,6 @@ void MainWindow::writeSettings()
 {
     Settings settings;
 
-    /*int row = ui->tw_profiles->currentRow();
-    QString currentProfile = ui->tw_profiles->item(row, 0)->text();
-    if (currentProfile != nullptr)
-        settings.setCurrentProfile(currentProfile);*/
-
     QListWidgetItem *iwaditem = ui->lw_iwad->currentItem();
     if (iwaditem != nullptr)
     {
@@ -362,7 +365,7 @@ void MainWindow::writeSettings()
     settings.setExePath(ui->le_executablepath->text());
 
     QListWidgetItem *configitem = ui->lw_port_config->currentItem();
-    if (configitem != nullptr)
+    if (configitem != nullptr && configitem->text() != "[default]")
         settings.setConfigFile(configitem->text());
 
     delete iwaditem;
@@ -379,6 +382,12 @@ void MainWindow::readSettings()
 
     ListHelper::selectItem(ui->lw_iwad, settings.getLastIwad());
 
+    QString config = settings.getConfigFile();
+    if (config.isEmpty())
+        ListHelper::selectItem(ui->lw_port_config, "[default]");
+    else
+        ListHelper::selectItem(ui->lw_port_config, config);
+
     QStringList pwads = settings.getLastPwad().split("#");
     for (QString item : pwads)
         ListHelper::selectItem(ui->lw_pwad, ui->le_pwaddir->text() + item, Qt::Checked);
@@ -391,4 +400,54 @@ void MainWindow::on_btn_ripandtear_clicked()
     gzdoom.setIwad(ui->lw_iwad->currentItem()->text());
     gzdoom.setPwads(checkedItems);
     gzdoom.start();
+}
+
+void MainWindow::on_lw_pwad_itemChanged(QListWidgetItem *item)
+{
+    QFont font;
+
+    if (item->checkState() == Qt::Checked)
+        font.setBold(true);
+    else
+        font.setBold(false);
+
+    item->setFont(font);
+}
+
+void MainWindow::on_lw_iwad_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if (previous != nullptr)
+    {
+        QFont font2;
+        font2.setBold(false);
+
+        previous->setFont(font2);
+    }
+
+    if (current != nullptr)
+    {
+        QFont font;
+        font.setBold(true);
+
+        current->setFont(font);
+    }
+}
+
+void MainWindow::on_lw_port_config_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if (previous != nullptr)
+    {
+        QFont font2;
+        font2.setBold(false);
+
+        previous->setFont(font2);
+    }
+
+    if (current != nullptr)
+    {
+        QFont font;
+        font.setBold(true);
+
+        current->setFont(font);
+    }
 }
