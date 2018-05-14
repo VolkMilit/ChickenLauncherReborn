@@ -368,7 +368,11 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
-             <widget class="QLineEdit" name="le_iwaddir"/>
+             <widget class="QLineEdit" name="le_iwaddir">
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="btn_iwad_chooser">
@@ -399,7 +403,11 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <item>
-             <widget class="QLineEdit" name="le_pwaddir"/>
+             <widget class="QLineEdit" name="le_pwaddir">
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="btn_pwad_chooser">
@@ -430,7 +438,11 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_9">
             <item>
-             <widget class="QLineEdit" name="le_executablepath"/>
+             <widget class="QLineEdit" name="le_executablepath">
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="btn_exe_chooser">
