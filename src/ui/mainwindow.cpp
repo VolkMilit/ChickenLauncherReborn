@@ -395,11 +395,27 @@ void MainWindow::readSettings()
 
 void MainWindow::on_btn_ripandtear_clicked()
 {
-    Gzdoom gzdoom;
-    gzdoom.setExe(ui->le_executablepath->text());
-    gzdoom.setIwad(ui->lw_iwad->currentItem()->text());
-    gzdoom.setPwads(checkedItems);
-    gzdoom.start();
+    Gzdoom *gzdoom = new Gzdoom;
+    gzdoom->setExe(ui->le_executablepath->text());
+    gzdoom->setIwad(ui->lw_iwad->currentItem()->text());
+    gzdoom->setPwads(checkedItems);
+    gzdoom->setMap(ui->le_gz_map->text());
+
+    if (ui->cb_gz_skill->isChecked())
+        gzdoom->setSkill(ui->comb_gz_skill->currentIndex());
+
+    if (ui->gb_gz_join->isChecked())
+        gzdoom->setAddress(ui->le_gz_ip->text() + ":" + ui->le_gz_ipport->text());
+
+    ui->btn_ripandtear->setEnabled(false);
+    connect(gzdoom, &Gzdoom::isfinish, this, &MainWindow::setStartButtonEnable);
+
+    gzdoom->start();
+}
+
+void MainWindow::setStartButtonEnable(int enable)
+{
+    ui->btn_ripandtear->setEnabled(true);
 }
 
 void MainWindow::on_lw_pwad_itemChanged(QListWidgetItem *item)
@@ -449,5 +465,24 @@ void MainWindow::on_lw_port_config_currentItemChanged(QListWidgetItem *current, 
         font.setBold(true);
 
         current->setFont(font);
+    }
+}
+
+void MainWindow::on_le_gz_map_textChanged(const QString &arg1)
+{
+    const QString last_iwad = ui->lw_iwad->currentItem()->text();
+    if (last_iwad.contains("DOOM.WAD", Qt::CaseInsensitive) \
+            || last_iwad.contains("heretic", Qt::CaseInsensitive) \
+            || last_iwad.contains("wolf", Qt::CaseInsensitive))
+    {
+        if (!arg1.isEmpty())
+        {
+            if (arg1.at(0).isDigit())
+                ui->le_gz_map->setText("E" + QString(arg1.at(0)).toUtf8());
+
+            if (arg1.length() >= 3)
+                if (arg1.at(2).isDigit())
+                    ui->le_gz_map->setText("E" + QString(arg1.at(1)).toUtf8() + "M" + QString(arg1.at(2)).toUtf8());
+        }
     }
 }

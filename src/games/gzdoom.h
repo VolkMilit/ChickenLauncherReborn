@@ -1,15 +1,18 @@
 #ifndef GZDOOM_H
 #define GZDOOM_H
 
+#include <QObject>
 #include <QString>
 #include <QProcess>
 #include <QMessageBox>
 
-class Gzdoom
+class Gzdoom : public QObject
 {
+    Q_OBJECT
+
     public:
-        Gzdoom();
-        ~Gzdoom();
+        Gzdoom(QObject *parent = 0);
+        virtual ~Gzdoom();
 
         void setIwad(const QString &iwad);
         void setPwads(const QStringList &pwads);
@@ -18,10 +21,15 @@ class Gzdoom
         void setNoSound(const bool sound);
         void setNoSFX(const bool sfx);
         void setMap(const QString &map);
-        void setDemo(const QString &demo);
+        void setSkill(const int skill);
+        void enableDemoRecording(const bool demo);
         void setConfig(const QString &config);
+        void setAddress(const QString &address);
 
         void start();
+
+    signals:
+        void isfinish(int exitcode);
 
     private:
         struct params
@@ -33,8 +41,10 @@ class Gzdoom
             bool nosound;
             bool nosfx;
             QString map;
-            QString demo;
+            int skill;
+            bool demo;
             QString config;
+            QString address;
         } params;
 };
 

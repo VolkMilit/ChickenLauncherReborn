@@ -1,7 +1,7 @@
 #include "gzdoom.h"
 #include <QDebug>
 
-Gzdoom::Gzdoom()
+Gzdoom::Gzdoom(QObject *parent) : QObject(parent)
 {
 }
 
@@ -16,8 +16,26 @@ void Gzdoom::start()
     for (QString item : pwads_list)
         pwads += item + " ";
 
-    QProcess *executable = new QProcess;
-    executable->start("x-terminal-emulator -e " + params.exe + " -IWAD " + params.iwad + " -file " + pwads);
+    QString map;
+    map = params.map;
+    if (params.map.at(0) == QChar('E', false) && params.map.at(2) == QChar('M', false))
+        map = params.map.mid(1,1) + " " + params.map.mid(3,3);
+
+    QString join;
+    if (!params.address.isEmpty())
+        join = " -join " + params.address;
+
+    QProcess *executable = new QProcess(this);
+
+    connect(executable, qOverload<int>(&QProcess::finished), this, &Gzdoom::isfinish);
+
+    executable->start("x-terminal-emulator -e " + params.exe +\
+                      " -IWAD " + params.iwad +\
+                      " -file " + pwads +\
+                      " -warp " + map +\
+                      " -skill " + QString::number(params.skill) +\
+                      " -stdout " +\
+                      join);
 
     /*executable->waitForFinished();
     qDebug() << executable->readAllStandardOutput();*/
@@ -31,7 +49,7 @@ void Gzdoom::setConfig(const QString &config)
     params.config = config;
 }
 
-void Gzdoom::setDemo(const QString &demo)
+void Gzdoom::enableDemoRecording(const bool demo)
 {
     params.demo = demo;
 }
@@ -69,4 +87,14 @@ void Gzdoom::setNoSound(const bool sound)
 void Gzdoom::setPwads(const QStringList &pwads)
 {
     params.pwads = pwads;
+}
+
+void Gzdoom::setSkill(const int skill)
+{
+    params.skill = skill;
+}
+
+void Gzdoom::setAddress(const QString &address)
+{
+    params.address = address;
 }
