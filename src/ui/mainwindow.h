@@ -9,6 +9,7 @@
 #include <QVector>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QFileDialog>
 
 #include "ui/newprofiledialog.h"
 #include "core/directorylist.h"
@@ -52,7 +53,13 @@ class MainWindow : public QMainWindow
 
         void setStartButtonEnable(int enable);
 
-    private:
+        void on_btn_iwad_chooser_clicked();
+
+        void on_btn_pwad_chooser_clicked();
+
+        void on_btn_exe_chooser_clicked();
+
+private:
         Ui::MainWindow *ui;
 
         void setupWindow();

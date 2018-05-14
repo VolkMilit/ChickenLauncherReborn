@@ -16,12 +16,19 @@ void Gzdoom::start()
     for (QString item : pwads_list)
         pwads += item + " ";
 
-    QString map;
-    map = params.map;
-    if (params.map.at(0) == QChar('E', false) && params.map.at(2) == QChar('M', false))
-        map = params.map.mid(1,1) + " " + params.map.mid(3,3);
+    QString map = "";
+    QString skill = "";
+    if (!params.map.isEmpty())
+    {
+        skill = " -skill " + QString::number(params.skill);
 
-    QString join;
+        map = " -warp " + params.map;
+
+        if (params.map.at(0) == QChar('E', false) && params.map.at(2) == QChar('M', false))
+            map = " -warp " + params.map.mid(1,1) + " " + params.map.mid(3,3);
+    }
+
+    QString join = "";
     if (!params.address.isEmpty())
         join = " -join " + params.address;
 
@@ -32,10 +39,16 @@ void Gzdoom::start()
     executable->start("x-terminal-emulator -e " + params.exe +\
                       " -IWAD " + params.iwad +\
                       " -file " + pwads +\
-                      " -warp " + map +\
-                      " -skill " + QString::number(params.skill) +\
+                      map + skill +\
                       " -stdout " +\
                       join);
+
+    qDebug() << "x-terminal-emulator -e " + params.exe +\
+                " -IWAD " + params.iwad +\
+                " -file " + pwads +\
+                map + skill +\
+                " -stdout " +\
+                join;
 
     /*executable->waitForFinished();
     qDebug() << executable->readAllStandardOutput();*/

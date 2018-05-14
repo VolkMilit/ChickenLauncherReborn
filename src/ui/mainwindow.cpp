@@ -486,3 +486,40 @@ void MainWindow::on_le_gz_map_textChanged(const QString &arg1)
         }
     }
 }
+
+void MainWindow::on_btn_iwad_chooser_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this,\
+                                                    tr("Choose iwad directory"),\
+                                                    QDir::homePath(),\
+                                                    QFileDialog::ShowDirsOnly);
+
+    if (dir.isEmpty())
+        return;
+
+    ui->le_iwaddir->setText(dir);
+}
+
+void MainWindow::on_btn_pwad_chooser_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this,\
+                                                    tr("Choose pwad directory"),\
+                                                    QDir::homePath(),\
+                                                    QFileDialog::ShowDirsOnly);
+    if (dir.isEmpty())
+        return;
+
+    ui->le_pwaddir->setText(dir);
+}
+
+void MainWindow::on_btn_exe_chooser_clicked()
+{
+    QString dir = QFileDialog::getOpenFileName(this,\
+                                                    tr("Choose exe directory"),\
+                                                    QDir::homePath(),\
+                                                    tr("Executable Files (*.* *.exe)"));
+    if (dir.isEmpty())
+        return;
+
+    ui->le_executablepath->setText(dir);
+}
