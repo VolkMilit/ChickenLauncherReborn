@@ -37,7 +37,7 @@ void MainWindow::on_btn_profiles_new_clicked()
 
 void MainWindow::populateProfilesTable()
 {
-    QVector<QString> scan = DirectoryList::scan(settings->getProfilesDir(), QStringList() << "*.ini");
+    const QStringList &scan = DirectoryList::scan(settings->getProfilesDir(), QStringList() << "*.ini");
 
     for (auto i = 0; i < scan.size(); ++i)
     {
@@ -69,7 +69,7 @@ void MainWindow::on_btn_profiles_rename_clicked()
     QTableWidgetItem *item = ui->tw_profiles->currentItem();
     QString profilesDir = settings->getProfilesDir();
 
-    if (item == nullptr)
+    if (!item)
         return;
 
     bool ok;
@@ -98,7 +98,7 @@ void MainWindow::on_btn_profiles_delete_clicked()
 {
     QTableWidgetItem *item = ui->tw_profiles->currentItem();
 
-    if (item == nullptr)
+    if (!item)
         return;
 
     QMessageBox message;
@@ -125,7 +125,7 @@ void MainWindow::on_btn_profiles_clone_clicked()
 {
     QTableWidgetItem *item = ui->tw_profiles->currentItem();
 
-    if (item == nullptr)
+    if (!item)
         return;
 
     bool ok;
@@ -182,7 +182,7 @@ void MainWindow::populateIwadList()
 {
     ui->lw_iwad->clear();
 
-    QVector<QString> scan = DirectoryList::scan(ui->le_iwaddir->text(), QStringList() << "*.wad" << "*.pk3" << "*.zip");
+    const QStringList &scan = DirectoryList::scan(ui->le_iwaddir->text(), QStringList() << "*.wad" << "*.pk3" << "*.zip");
 
     for (const QString &item : scan)
         ListHelper::addItem(ui->lw_iwad, item);
@@ -192,7 +192,7 @@ void MainWindow::populatePwadList()
 {
     ui->lw_pwad->clear();
 
-    QVector<QString> scan = DirectoryList::scan(ui->le_pwaddir->text(), QStringList() << "*.wad" << "*.pk3" << "*.zip");
+    const QStringList &scan = DirectoryList::scan(ui->le_pwaddir->text(), QStringList() << "*.wad" << "*.pk3" << "*.zip");
 
     for (const QString &item : scan)
         ListHelper::addItem(ui->lw_pwad, item, Qt::Unchecked);
@@ -228,7 +228,7 @@ void MainWindow::on_btn_refresh_clicked()
 
 void MainWindow::populateConfigList()
 {
-    const QVector<QString> &scan = DirectoryList::scan(GamesPaths::getGzdoomDir(), QStringList() << "*.ini");
+    const QStringList &scan = DirectoryList::scan(GamesPaths::getGzdoomDir(), QStringList() << "*.ini");
 
     ListHelper::addItem(ui->lw_port_config, "[default]");
 
@@ -283,7 +283,7 @@ void MainWindow::on_btn_config_rename_clicked()
 {
     QListWidgetItem *item = ui->lw_port_config->currentItem();
 
-    if (item == nullptr)
+    if (!item)
         return;
 
     if (item->text() == "[default]")
@@ -312,7 +312,7 @@ void MainWindow::on_btn_config_delete_clicked()
 {
     QListWidgetItem *item = ui->lw_port_config->currentItem();
 
-    if (item == nullptr)
+    if (!item)
         return;
 
     if (item->text() == "[default]")
