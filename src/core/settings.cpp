@@ -14,12 +14,6 @@ Settings::Settings()
 
 Settings::~Settings(){}
 
-/* ___     _                            _
-  | _ \___| |_ _  _ _ _ _ _   __ ____ _| |_  _ ___
-  |   / -_)  _| || | '_| ' \  \ V / _` | | || / -_)
-  |_|_\___|\__|\_,_|_| |_||_|  \_/\__,_|_|\_,_\___|
-*/
-
 QString Settings::getLauncherHomeDir()
 {
     return home;
@@ -65,42 +59,6 @@ void Settings::setOffWadPath(const short value)
 short Settings::getOffWadPath()
 {
     short ret = readIntSettings(defaultSettings, "settings", "OffWadPath");
-    return ret;
-}
-
-//foreground_color
-void Settings::setForegroundColor(const QString &value)
-{
-    writeSettings(defaultSettings, "settings", "ForegroundColor", value);
-}
-
-QString Settings::getForegroundColor()
-{
-    QString ret = readSettings(defaultSettings, "settings", "ForegroundColor");
-    return ret;
-}
-
-//hide program instead of close
-void Settings::setHide(const short value)
-{
-    writeSettings(defaultSettings, "settings", "hide", value);
-}
-
-short Settings::getHide()
-{
-    short ret = readIntSettings(defaultSettings, "settings", "Hide");
-    return ret;
-}
-
-//hide program when game start
-void Settings::setHideGame(const short value)
-{
-    writeSettings(defaultSettings, "settings", "HideGame", value);
-}
-
-short Settings::getHideGame()
-{
-    short ret = readIntSettings(defaultSettings, "settings", "HideGame");
     return ret;
 }
 
@@ -299,85 +257,6 @@ QString Settings::getIpPort()
 {
     QString ret = readSettings(getCurrentProfile(), "Network", "IpPort");
     return ret;
-}
-
-/* ___             _   _
-  | __|  _ _ _  __| |_(_)___ _ _  ___
-  | _| || | ' \/ _|  _| / _ \ ' \(_-<
-  |_| \_,_|_||_\__|\__|_\___/_||_/__/
-*/
-
-bool Settings::fileExist(const QString &file)
-{
-    /*QFile f(file);
-
-    QFile settings(defaultSettings);
-    QString defaultProfileFile = getCurrentProfile();
-    QFile profile(defaultProfileFile);
-
-    if (!f.exists())
-    {
-        QMessageBox::critical(this, "", "Seams to file " + file
-                              + " doesn't exist. Launcher create new settings.ini and new default.ini if they missig.");
-
-        //settings.ini
-        if (!settings.exists())
-        {
-            setForegroundColor("Blue");
-            setHide(1);
-            setOffWadPath(0);
-            setCurrentProfile("default.ini");
-        }
-
-        //default.ini
-        if (!profile.exists())
-        {
-            setAdvCmdParam("");
-            setAdvExeParam("");
-            setExePath("gzdoom");
-            setIwadDir("$HOME/games/DOOM/IWAD");
-            setPwadDir("$HOME/games/DOOM/PWAD");
-            setLastIwad("DOOM.WAD");
-        }
-
-        return false;
-    }
-
-    return true;*/
-}
-
-void Settings::writeAllSettings(const QString &file)
-{
-    //[WAD]
-    /*writeSettings(file, "WAD", "iwad_dir", myUi->le_iwad->text());
-    writeSettings(file, "WAD", "iwad_dir", myUi->le_pwad->text());*/
-
-    //[Port]
-    /*writeSettings(file, "Port", "port_exe", myUi->le_exe->text());
-    writeSettings(file, "Port", "additional_port_param", myUi->le_adv_port_param->text());
-    writeSettings(file, "Port", "additional_cmd_param", myUi->le_adv_cmd_param->text());*/
-}
-
-void Settings::readAllSettings(const QString &file)
-{
-    //[WAD]
-    /*myUi->le_iwad->setText(readSettings(file, "WAD", "iwad_dir"));
-    myUi->le_pwad->setText(readSettings(file, "WAD", "pwad_dir"));*/
-
-    //[Port]
-    /*myUi->le_exe->setText(readSettings(file, "Port", "port_exe"));
-    myUi->le_adv_port_param->setText(readSettings(file, "Port", "additional_port_param"));
-    myUi->le_adv_cmd_param->setText(readSettings(file, "Port", "additional_cmd_param"));
-
-    if (readIntSettings(file, "Port", "water") == 1)
-        myUi->cb_darkplaces_water->setChecked(true);
-
-    //[Network]
-    if (readIntSettings(file, "Network", "enabled") == 1)
-        myUi->gb_join->setChecked(true);
-
-    myUi->le_ip->setText(readSettings(file, "Network", "ip"));
-    myUi->le_port->setText(readSettings(file, "Network", "ip_port"));*/
 }
 
 void Settings::writeSettings(const QString &file, const QString &group, const QString &value, const QString &var)

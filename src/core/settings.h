@@ -1,9 +1,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QMessageBox>
 #include <QString>
-#include <QDir>
 #include <QSettings>
 
 #include "ui_mainwindow.h"
@@ -13,8 +11,6 @@ class Settings
     public:
         Settings();
         ~Settings();
-
-        bool fileExist(const QString &file);
 
         QString getProfilesDir();
         QString getLauncherSettingsFile();
@@ -37,14 +33,6 @@ class Settings
         //off_wad_path
         void setOffWadPath(const short value);
         short getOffWadPath();
-
-        //foreground_color
-        void setForegroundColor(const QString &value);
-        QString getForegroundColor();
-
-        //hide program instead of close
-        void setHide(const short value);
-        short getHide();
 
         //hide program when game start
         void setHideGame(const short value);
