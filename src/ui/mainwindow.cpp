@@ -22,16 +22,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btn_profiles_new_clicked()
 {
-    Settings settings;
     newProfileDialog dialog;
     bool ok = dialog.exec();
-
-    QFile file(settings.getProfilesDir() + dialog.getName() + ".ini");
-    if (file.exists())
-    {
-        QMessageBox::warning(this, "Error", "Profile already exist.", QMessageBox::Ok);
-        return;
-    }
 
     if (ok)
         TableHelper::addItem(ui->tw_profiles, dialog.getName(), dialog.getPort());
@@ -44,7 +36,7 @@ void MainWindow::populateProfilesTable()
     Settings settings;
     QVector<QString> scan = DirectoryList::scan(settings.getProfilesDir(), QStringList() << "*.ini");
 
-    for (auto i = 0; i < scan.size(); i++)
+    for (auto i = 0; i < scan.size(); ++i)
     {
         QString port = settings.readSettings(scan.at(i), "Port", "GamePort");
         QString profileRow = scan.at(i);
@@ -64,6 +56,8 @@ void MainWindow::setupWindow()
     TableHelper::selectItem(ui->tw_profiles, title.baseName().remove(".ini"));
 
     ui->le_search->hide();
+
+    ui->tabWidget->setTabEnabled(5, false);
 
     readSettings();
 }
@@ -193,7 +187,7 @@ void MainWindow::populateIwadList()
 
     QVector<QString> scan = DirectoryList::scan(ui->le_iwaddir->text(), QStringList() << "*.wad" << "*.pk3" << "*.zip");
 
-    for (QString item : scan)
+    for (const QString &item : scan)
         ListHelper::addItem(ui->lw_iwad, item);
 }
 
@@ -203,7 +197,7 @@ void MainWindow::populatePwadList()
 
     QVector<QString> scan = DirectoryList::scan(ui->le_pwaddir->text(), QStringList() << "*.wad" << "*.pk3" << "*.zip");
 
-    for (QString item : scan)
+    for (const QString &item : scan)
         ListHelper::addItem(ui->lw_pwad, item, Qt::Unchecked);
 }
 
@@ -231,6 +225,9 @@ void MainWindow::on_btn_pwad_down_clicked()
 void MainWindow::on_btn_refresh_clicked()
 {
     populatePwadList();
+
+    foreach (const QString &item, checkedItems) // DO NOT use std foreach here, it will segfault
+       ListHelper::selectItem(ui->lw_pwad, item, Qt::Checked);
 }
 
 void MainWindow::populateConfigList()
@@ -239,7 +236,7 @@ void MainWindow::populateConfigList()
 
     ListHelper::addItem(ui->lw_port_config, "[default]");
 
-    for (QString item : scan)
+    for (const QString &item : scan)
     {
         QFileInfo file(item);
 
@@ -353,7 +350,7 @@ void MainWindow::writeSettings()
     }
 
     QString lastpwad;
-    for (QString item : checkedItems)
+    for (const QString &item : checkedItems)
     {
         QFileInfo lastpwaditem(item);
         lastpwad.append(lastpwaditem.fileName() + "#");
@@ -389,7 +386,7 @@ void MainWindow::readSettings()
         ListHelper::selectItem(ui->lw_port_config, config);
 
     QStringList pwads = settings.getLastPwad().split("#");
-    for (QString item : pwads)
+    for (const QString &item : pwads)
         ListHelper::selectItem(ui->lw_pwad, ui->le_pwaddir->text() + item, Qt::Checked);
 }
 
@@ -522,4 +519,11 @@ void MainWindow::on_btn_exe_chooser_clicked()
         return;
 
     ui->le_executablepath->setText(dir);
+}
+
+void MainWindow::on_actionAbout_Chicken_Launcher_triggered()
+{
+    AboutDialog about;
+    about.exec();
+    about.done(0);
 }
