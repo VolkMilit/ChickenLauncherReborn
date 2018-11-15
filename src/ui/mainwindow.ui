@@ -32,7 +32,10 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
+      </property>
+      <property name="tabBarAutoHide">
+       <bool>false</bool>
       </property>
       <widget class="QWidget" name="tab_profiles">
        <attribute name="icon">
@@ -838,7 +841,7 @@
      <x>0</x>
      <y>0</y>
      <width>680</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -848,18 +851,11 @@
     <addaction name="actionSettings"/>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuGame">
-    <property name="title">
-     <string>Game</string>
-    </property>
-    <addaction name="actionGZDoom"/>
-    <addaction name="actionDarkplaces"/>
-    <addaction name="actionUHexen2"/>
-   </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
      <string>About</string>
     </property>
+    <addaction name="actionAbout_Chicken_Launcher"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -870,7 +866,6 @@
     <addaction name="actionObligate"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuGame"/>
    <addaction name="menuTools"/>
    <addaction name="menuAbout"/>
   </widget>
@@ -941,6 +936,11 @@
    </property>
    <property name="text">
     <string>WAD download</string>
+   </property>
+  </action>
+  <action name="actionAbout_Chicken_Launcher">
+   <property name="text">
+    <string>About Chicken Launcher</string>
    </property>
   </action>
  </widget>

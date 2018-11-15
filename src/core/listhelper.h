@@ -9,6 +9,7 @@ class ListHelper
 {
     public:
         static void addItem(QListWidget *widget, const QString &item);
+        static void addItem(QListWidget *widget, const QString &item, const QString &image);
         static void addItem(QListWidget *widget, const QString &item, Qt::CheckState checked);
         static QStringList getCheckedItems(QListWidget *widget);
         static void moveUp(QListWidget *widget);

@@ -13,6 +13,13 @@ void ListHelper::addItem(QListWidget *widget, const QString &item, Qt::CheckStat
     widget->addItem(witem);
 }
 
+void ListHelper::addItem(QListWidget *widget, const QString &item, const QString &image)
+{
+    QListWidgetItem *witem = new QListWidgetItem(item);
+    witem->setIcon(QIcon(image));
+    widget->addItem(witem);
+}
+
 QStringList ListHelper::getCheckedItems(QListWidget *widget)
 {
     QStringList list;

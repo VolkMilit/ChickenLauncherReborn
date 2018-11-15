@@ -30,23 +30,25 @@ void MainWindow::on_btn_profiles_new_clicked()
     bool ok = dialog.exec();
 
     if (ok)
-        TableHelper::addItem(ui->tw_profiles, dialog.getName(), dialog.getPort());
+        TableHelper::addItem(ui->tw_profiles, ":/doom.png", dialog.getName(), dialog.getPort());
 
     dialog.done(0);
 }
 
 void MainWindow::populateProfilesTable()
 {
+    ui->tw_profiles->setIconSize(QSize(50, 25));
+
     const QStringList &scan = DirectoryList::scan(settings->getProfilesDir(), QStringList() << "*.ini");
 
     for (auto i = 0; i < scan.size(); ++i)
     {
-        QString port = settings->readSettings(scan.at(i), "Port", "GamePort");
+        const QString &port = settings->readSettings(scan.at(i), "Port", "GamePort");
         QString profileRow = scan.at(i);
 
         QFileInfo profile(profileRow.remove(".ini"));
 
-        TableHelper::addItem(ui->tw_profiles, profile.baseName(), port);
+        TableHelper::addItem(ui->tw_profiles, ":/doom.png", profile.baseName(), port);
     }
 }
 
@@ -146,7 +148,7 @@ void MainWindow::on_btn_profiles_clone_clicked()
 
         QFile::copy(profilesDir + item->text() + ".ini", profilesDir + text + ".ini");
 
-        TableHelper::addItem(ui->tw_profiles, text, ui->tw_profiles->item(item->row(), 1)->text());
+        TableHelper::addItem(ui->tw_profiles, ":/doom.png", text, ui->tw_profiles->item(item->row(), 1)->text());
         TableHelper::selectItem(ui->tw_profiles, text);
         QTableWidgetItem *item = ui->tw_profiles->currentItem();
         settings->setCurrentProfile(item->text());
@@ -181,11 +183,19 @@ void MainWindow::on_btn_profiles_load_clicked()
 void MainWindow::populateIwadList()
 {
     ui->lw_iwad->clear();
+    ui->lw_iwad->setIconSize(QSize(50, 25));
 
     const QStringList &scan = DirectoryList::scan(ui->le_iwaddir->text(), QStringList() << "*.wad" << "*.pk3" << "*.zip");
 
     for (const QString &item : scan)
-        ListHelper::addItem(ui->lw_iwad, item);
+    {
+        QFileInfo fi(item);
+
+        if (!fi.baseName().compare("doom2", Qt::CaseInsensitive))
+            ListHelper::addItem(ui->lw_iwad, item, ":/doom2.png");
+        else if (!fi.baseName().compare("doom", Qt::CaseInsensitive))
+            ListHelper::addItem(ui->lw_iwad, item, ":/doom.png");
+    }
 }
 
 void MainWindow::populatePwadList()
@@ -399,7 +409,7 @@ void MainWindow::on_btn_ripandtear_clicked()
     ui->btn_ripandtear->setEnabled(false);
     connect(gzdoom, &Gzdoom::isfinish, [&](){
         ui->btn_ripandtear->setEnabled(true);
-        delete gzdoom;
+        //delete gzdoom;
     });
 
     gzdoom->start();
@@ -433,6 +443,10 @@ void MainWindow::on_lw_iwad_currentItemChanged(QListWidgetItem *current, QListWi
         font.setBold(true);
 
         current->setFont(font);
+
+        ui->btn_ripandtear->setIcon(current->icon());
+        QFileInfo fi(current->text());
+        ui->btn_ripandtear->setText("Play " + fi.completeBaseName());
     }
 }
 

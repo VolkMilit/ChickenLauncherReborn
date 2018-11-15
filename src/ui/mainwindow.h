@@ -6,12 +6,12 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QTableWidgetItem>
-#include <QVector>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QFileDialog>
 
 #include "ui/newprofiledialog.h"
+#include "ui/aboutdialog.h"
 #include "core/directorylist.h"
 #include "core/settings.h"
 #include "core/tablehelper.h"
@@ -50,14 +50,10 @@ class MainWindow : public QMainWindow
         void on_lw_iwad_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
         void on_lw_port_config_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
         void on_le_gz_map_textChanged(const QString &arg1);
-
-        void setStartButtonEnable(int enable);
-
         void on_btn_iwad_chooser_clicked();
-
         void on_btn_pwad_chooser_clicked();
-
         void on_btn_exe_chooser_clicked();
+        void on_actionAbout_Chicken_Launcher_triggered();
 
 private:
         Ui::MainWindow *ui;
@@ -70,6 +66,8 @@ private:
 
         void writeSettings();
         void readSettings();
+
+        Settings *settings;
 
         QStringList checkedItems;
 };

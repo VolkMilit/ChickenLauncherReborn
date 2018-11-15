@@ -1,5 +1,7 @@
 #include "settings.h"
 
+#include <QDir>
+
 Settings::Settings()
 {
     #ifdef _WIN32

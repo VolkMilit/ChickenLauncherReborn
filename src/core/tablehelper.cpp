@@ -1,10 +1,12 @@
 #include "tablehelper.h"
 #include <QDebug>
 
-void TableHelper::addItem(QTableWidget *widget, const QString &item1, const QString &item2)
+void TableHelper::addItem(QTableWidget *widget, const QString &icon, const QString &item1, const QString &item2)
 {
-    QTableWidgetItem *witem1 = new QTableWidgetItem(item1);
-    QTableWidgetItem *witem2 = new QTableWidgetItem(item2);
+    QTableWidgetItem *witem0 = new QTableWidgetItem(item1);
+    QTableWidgetItem *witem1 = new QTableWidgetItem(item2);
+
+    witem0->setIcon(QIcon(icon));
 
     int row;
 
@@ -15,8 +17,8 @@ void TableHelper::addItem(QTableWidget *widget, const QString &item1, const QStr
 
     widget->insertRow(row);
 
-    widget->setItem(row, 0, witem1);
-    widget->setItem(row, 1, witem2);
+    widget->setItem(row, 0, witem0);
+    widget->setItem(row, 1, witem1);
 }
 
 void TableHelper::selectItem(QTableWidget *widget, const QString &item)

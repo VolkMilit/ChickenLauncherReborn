@@ -7,7 +7,7 @@
 class TableHelper
 {
     public:
-        static void addItem(QTableWidget *widget, const QString &item1, const QString &item2);
+        static void addItem(QTableWidget *widget, const QString &icon, const QString &item1, const QString &item2);
         static void selectItem(QTableWidget *widget, const QString &item);
         static void setStandartFont(QTableWidget *widget);
 

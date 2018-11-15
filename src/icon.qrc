@@ -2,5 +2,9 @@
  <qresource>
      <file>images/chicken_reborn.png</file>
      <file alias="chicken.png">images/chicken_reborn.png</file>
+     <file>images/logos/doom.png</file>
+     <file alias="doom.png">images/logos/doom.png</file>
+     <file>images/logos/doom2.png</file>
+     <file alias="doom2.png">images/logos/doom2.png</file>
  </qresource>
  </RCC>
