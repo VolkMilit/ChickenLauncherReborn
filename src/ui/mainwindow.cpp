@@ -402,16 +402,11 @@ void MainWindow::on_btn_ripandtear_clicked()
 
     ui->btn_ripandtear->setEnabled(false);
     connect(gzdoom, &Gzdoom::isfinish, [&](){
-        setStartButtonEnable(true);
+        ui->btn_ripandtear->setEnabled(true);
         delete gzdoom;
     });
 
     gzdoom->start();
-}
-
-void MainWindow::setStartButtonEnable(int enable)
-{
-    ui->btn_ripandtear->setEnabled(true);
 }
 
 void MainWindow::on_lw_pwad_itemChanged(QListWidgetItem *item)
@@ -466,7 +461,7 @@ void MainWindow::on_lw_port_config_currentItemChanged(QListWidgetItem *current, 
 
 void MainWindow::on_le_gz_map_textChanged(const QString &arg1)
 {
-    const QString last_iwad = ui->lw_iwad->currentItem()->text();
+    const QString &last_iwad = ui->lw_iwad->currentItem()->text();
     if (last_iwad.contains("DOOM.WAD", Qt::CaseInsensitive) \
             || last_iwad.contains("heretic", Qt::CaseInsensitive) \
             || last_iwad.contains("wolf", Qt::CaseInsensitive))
