@@ -163,8 +163,7 @@ void MainWindow::on_btn_profiles_load_clicked()
     font.setBold(true);
     int row = ui->tw_profiles->currentRow();
 
-    Settings settings;
-    settings.setCurrentProfile(ui->tw_profiles->item(row, 0)->text());
+    settings->setCurrentProfile(ui->tw_profiles->item(row, 0)->text());
     ui->tw_profiles->item(row, 0)->setFont(font);
     ui->tw_profiles->item(row, 1)->setFont(font);
 
@@ -174,7 +173,7 @@ void MainWindow::on_btn_profiles_load_clicked()
     ui->le_iwaddir->clear();
     ui->le_pwaddir->clear();
 
-    setWindowTitle("ChickenLauncher - " + ui->tw_profiles->item(ui->tw_profiles->currentRow(), 0)->text());
+    this->setWindowTitle("ChickenLauncher - " + ui->tw_profiles->item(ui->tw_profiles->currentRow(), 0)->text());
 
     readSettings();
 }
@@ -201,8 +200,7 @@ void MainWindow::populatePwadList()
 
 void MainWindow::on_lw_iwad_itemActivated(QListWidgetItem *item)
 {
-    Settings settings;
-    settings.setLastIwad(item->text());
+    settings->setLastIwad(item->text());
 }
 
 void MainWindow::on_lw_pwad_itemChanged()
@@ -230,7 +228,7 @@ void MainWindow::on_btn_refresh_clicked()
 
 void MainWindow::populateConfigList()
 {
-    QVector<QString> scan = DirectoryList::scan(GamesPaths::getGzdoomDir(), QStringList() << "*.ini");
+    const QVector<QString> &scan = DirectoryList::scan(GamesPaths::getGzdoomDir(), QStringList() << "*.ini");
 
     ListHelper::addItem(ui->lw_port_config, "[default]");
 
@@ -367,21 +365,19 @@ void MainWindow::writeSettings()
 
 void MainWindow::readSettings()
 {
-    Settings settings;
+    ui->le_iwaddir->setText(settings->getIwadDir());
+    ui->le_pwaddir->setText(settings->getPwadDir());
+    ui->le_executablepath->setText(settings->getExePath());
 
-    ui->le_iwaddir->setText(settings.getIwadDir());
-    ui->le_pwaddir->setText(settings.getPwadDir());
-    ui->le_executablepath->setText(settings.getExePath());
+    ListHelper::selectItem(ui->lw_iwad, settings->getLastIwad());
 
-    ListHelper::selectItem(ui->lw_iwad, settings.getLastIwad());
-
-    QString config = settings.getConfigFile();
+    const QString &config = settings->getConfigFile();
     if (config.isEmpty())
         ListHelper::selectItem(ui->lw_port_config, "[default]");
     else
         ListHelper::selectItem(ui->lw_port_config, config);
 
-    QStringList pwads = settings.getLastPwad().split("#");
+    const QStringList &pwads = settings->getLastPwad().split("#");
     for (const QString &item : pwads)
         ListHelper::selectItem(ui->lw_pwad, ui->le_pwaddir->text() + item, Qt::Checked);
 }
