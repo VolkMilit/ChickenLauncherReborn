@@ -8,15 +8,19 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    settings = new Settings;
+
     populateProfilesTable();
     populateConfigList();
     setupWindow();
 }
 
 MainWindow::~MainWindow()
-{
+{  
     writeSettings();
-    checkedItems.clear();
+
+    delete settings;
+    //checkedItems.clear();
     delete ui;
 }
 
@@ -33,12 +37,11 @@ void MainWindow::on_btn_profiles_new_clicked()
 
 void MainWindow::populateProfilesTable()
 {
-    Settings settings;
-    QVector<QString> scan = DirectoryList::scan(settings.getProfilesDir(), QStringList() << "*.ini");
+    QVector<QString> scan = DirectoryList::scan(settings->getProfilesDir(), QStringList() << "*.ini");
 
     for (auto i = 0; i < scan.size(); ++i)
     {
-        QString port = settings.readSettings(scan.at(i), "Port", "GamePort");
+        QString port = settings->readSettings(scan.at(i), "Port", "GamePort");
         QString profileRow = scan.at(i);
 
         QFileInfo profile(profileRow.remove(".ini"));
@@ -49,8 +52,7 @@ void MainWindow::populateProfilesTable()
 
 void MainWindow::setupWindow()
 {
-    Settings settings;
-    QFileInfo title(settings.getDefaultProfileName());
+    QFileInfo title(settings->getDefaultProfileName());
     this->setWindowTitle("ChickenLauncher - " + title.baseName().remove(".ini"));
 
     TableHelper::selectItem(ui->tw_profiles, title.baseName().remove(".ini"));
@@ -64,9 +66,8 @@ void MainWindow::setupWindow()
 
 void MainWindow::on_btn_profiles_rename_clicked()
 {
-    Settings settings;
     QTableWidgetItem *item = ui->tw_profiles->currentItem();
-    QString profilesDir = settings.getProfilesDir();
+    QString profilesDir = settings->getProfilesDir();
 
     if (item == nullptr)
         return;
@@ -85,8 +86,8 @@ void MainWindow::on_btn_profiles_rename_clicked()
 
     if (ok && !text.isEmpty())
     {
-        if (settings.getDefaultProfileName() == item->text())
-            settings.setCurrentProfile(text);
+        if (settings->getDefaultProfileName() == item->text())
+            settings->setCurrentProfile(text);
 
         QFile::rename(profilesDir + item->text() + ".ini", profilesDir + text + ".ini");
         item->setText(text);
@@ -95,8 +96,6 @@ void MainWindow::on_btn_profiles_rename_clicked()
 
 void MainWindow::on_btn_profiles_delete_clicked()
 {
-    Settings settings;
-
     QTableWidgetItem *item = ui->tw_profiles->currentItem();
 
     if (item == nullptr)
@@ -111,20 +110,19 @@ void MainWindow::on_btn_profiles_delete_clicked()
 
     if (ok == QMessageBox::Ok)
     {
-        QFile file(settings.getProfilesDir() + item->text() + ".ini");
+        QFile file(settings->getProfilesDir() + item->text() + ".ini");
         file.remove();
 
         ui->tw_profiles->removeRow(item->row());
 
         ui->tw_profiles->setCurrentCell(0, 0);
         QTableWidgetItem *item = ui->tw_profiles->currentItem();
-        settings.setCurrentProfile(item->text());
+        settings->setCurrentProfile(item->text());
     }
 }
 
 void MainWindow::on_btn_profiles_clone_clicked()
 {
-    Settings settings;
     QTableWidgetItem *item = ui->tw_profiles->currentItem();
 
     if (item == nullptr)
@@ -135,7 +133,7 @@ void MainWindow::on_btn_profiles_clone_clicked()
                                              tr("New profile name:"), QLineEdit::Normal,
                                              item->text(), &ok);
 
-    QFile file(settings.getProfilesDir() + text + ".ini");
+    QFile file(settings->getProfilesDir() + text + ".ini");
     if (file.exists())
     {
         QMessageBox::warning(this, "Error", "Profile already exist.", QMessageBox::Ok);
@@ -144,14 +142,14 @@ void MainWindow::on_btn_profiles_clone_clicked()
 
     if (ok && !text.isEmpty())
     {
-        QString profilesDir = settings.getProfilesDir();
+        QString profilesDir = settings->getProfilesDir();
 
         QFile::copy(profilesDir + item->text() + ".ini", profilesDir + text + ".ini");
 
         TableHelper::addItem(ui->tw_profiles, text, ui->tw_profiles->item(item->row(), 1)->text());
         TableHelper::selectItem(ui->tw_profiles, text);
         QTableWidgetItem *item = ui->tw_profiles->currentItem();
-        settings.setCurrentProfile(item->text());
+        settings->setCurrentProfile(item->text());
     }
 }
 
@@ -340,13 +338,11 @@ void MainWindow::on_btn_config_delete_clicked()
 
 void MainWindow::writeSettings()
 {
-    Settings settings;
-
     QListWidgetItem *iwaditem = ui->lw_iwad->currentItem();
     if (iwaditem != nullptr)
     {
         QFileInfo lastiwad(iwaditem->text());
-        settings.setLastIwad(lastiwad.fileName());
+        settings->setLastIwad(lastiwad.fileName());
     }
 
     QString lastpwad;
@@ -355,15 +351,15 @@ void MainWindow::writeSettings()
         QFileInfo lastpwaditem(item);
         lastpwad.append(lastpwaditem.fileName() + "#");
     }
-    settings.setLastPwad(lastpwad);
+    settings->setLastPwad(lastpwad);
 
-    settings.setIwadDir(ui->le_iwaddir->text());
-    settings.setPwadDir(ui->le_pwaddir->text());
-    settings.setExePath(ui->le_executablepath->text());
+    settings->setIwadDir(ui->le_iwaddir->text());
+    settings->setPwadDir(ui->le_pwaddir->text());
+    settings->setExePath(ui->le_executablepath->text());
 
     QListWidgetItem *configitem = ui->lw_port_config->currentItem();
     if (configitem != nullptr && configitem->text() != "[default]")
-        settings.setConfigFile(configitem->text());
+        settings->setConfigFile(configitem->text());
 
     delete iwaditem;
     delete configitem;
@@ -405,7 +401,10 @@ void MainWindow::on_btn_ripandtear_clicked()
         gzdoom->setAddress(ui->le_gz_ip->text() + ":" + ui->le_gz_ipport->text());
 
     ui->btn_ripandtear->setEnabled(false);
-    connect(gzdoom, &Gzdoom::isfinish, this, &MainWindow::setStartButtonEnable);
+    connect(gzdoom, &Gzdoom::isfinish, [&](){
+        setStartButtonEnable(true);
+        delete gzdoom;
+    });
 
     gzdoom->start();
 }
