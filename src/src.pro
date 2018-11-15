@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     core/directorylist.cpp \
     core/tablehelper.cpp \
     core/listhelper.cpp \
-    games/gzdoom.cpp
+    games/gzdoom.cpp \
+    ui/aboutdialog.cpp
 
 HEADERS  += ui/mainwindow.h \
             ui/newprofiledialog.h \
@@ -39,10 +40,12 @@ HEADERS  += ui/mainwindow.h \
     core/tablehelper.h \
     core/listhelper.h \
     games/common.h \
-    games/gzdoom.h
+    games/gzdoom.h \
+    ui/aboutdialog.h
 
 FORMS    += ui/mainwindow.ui \
-    ui/newprofiledialog.ui
+    ui/newprofiledialog.ui \
+    ui/aboutdialog.ui
 
 RESOURCES += \
     icon.qrc

@@ -33,6 +33,8 @@ void Gzdoom::start()
         join = " -join " + params.address;
 
     QProcess *executable = new QProcess(this);
+    executable->setEnvironment(QProcess::systemEnvironment());
+    executable->setProcessChannelMode(QProcess::MergedChannels);
 
     connect(executable, qOverload<int>(&QProcess::finished), this, &Gzdoom::isfinish);
 
@@ -40,21 +42,23 @@ void Gzdoom::start()
                       " -IWAD " + params.iwad +\
                       " -file " + pwads +\
                       map + skill +\
-                      " -stdout " +\
                       join);
 
-    qDebug() << "x-terminal-emulator -e " + params.exe +\
-                " -IWAD " + params.iwad +\
-                " -file " + pwads +\
-                map + skill +\
-                " -stdout " +\
-                join;
+    executable->waitForStarted();
+
+    connect(executable, &QProcess::readyReadStandardOutput, this, &Gzdoom::processOut);
 
     /*executable->waitForFinished();
     qDebug() << executable->readAllStandardOutput();*/
 
     if (executable->error() == QProcess::Crashed)
         QMessageBox::critical(0, "Error!", executable->errorString(), QMessageBox::Ok);
+}
+
+void Gzdoom::processOut()
+{
+    QProcess *p = dynamic_cast<QProcess *>(sender());
+    qDebug() << p->readAllStandardOutput();
 }
 
 void Gzdoom::setConfig(const QString &config)

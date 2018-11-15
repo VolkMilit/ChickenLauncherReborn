@@ -28,6 +28,8 @@ class Gzdoom : public QObject
 
         void start();
 
+        void processOut();
+
     signals:
         void isfinish(int exitcode);
 
@@ -46,6 +48,8 @@ class Gzdoom : public QObject
             QString config;
             QString address;
         } params;
+
+        QString output;
 };
 
 #endif // GZDOOM_H

@@ -1,6 +1,8 @@
 #include "newprofiledialog.h"
 #include "ui_newprofiledialog.h"
+
 #include <QDebug>
+#include <QMessageBox>
 
 newProfileDialog::newProfileDialog(QWidget *parent) :
     QDialog(parent),
@@ -34,6 +36,14 @@ void newProfileDialog::accept()
     }
 
     Settings settings;
+
+    QFile file(settings.getProfilesDir() + ui->le_name->text() + ".ini");
+    if (file.exists())
+    {
+        QMessageBox::warning(this, "Error", "Profile already exist.", QMessageBox::Ok);
+        return;
+    }
+
     settings.setCurrentProfile(ui->le_name->text());
     settings.setGamePort(ui->comb_game->currentText());
 
