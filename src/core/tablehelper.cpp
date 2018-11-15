@@ -1,5 +1,7 @@
 #include "tablehelper.h"
+
 #include <QDebug>
+#include <QComboBox>
 
 void TableHelper::addItem(QTableWidget *widget, const QString &icon, const QString &item1, const QString &item2)
 {

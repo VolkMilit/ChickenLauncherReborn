@@ -6,5 +6,15 @@
      <file alias="doom.png">images/logos/doom.png</file>
      <file>images/logos/doom2.png</file>
      <file alias="doom2.png">images/logos/doom2.png</file>
+     <file>images/logos/hexen2.png</file>
+     <file alias="hexen2.png">images/logos/hexen2.png</file>
+     <file>images/logos/quake.png</file>
+     <file alias="quake.png">images/logos/quake.png</file>
+     <file>images/logos/darkplaces.png</file>
+     <file alias="darkplaces.png">images/logos/darkplaces.png</file>
+     <file>images/logos/gzdoom.png</file>
+     <file alias="gzdoom.png">images/logos/gzdoom.png</file>
+     <file>images/logos/uhexen2.png</file>
+     <file alias="uhexen2.png">images/logos/uhexen2.png</file>
  </qresource>
  </RCC>
