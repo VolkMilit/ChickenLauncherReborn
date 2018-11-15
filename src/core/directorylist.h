@@ -12,7 +12,7 @@
 class DirectoryList
 {
     public:
-        static QVector<QString> scan(const QString &dir, QStringList ext);
+        static QStringList scan(const QString &dir, const QStringList &ext);
 
     private:
         DirectoryList();

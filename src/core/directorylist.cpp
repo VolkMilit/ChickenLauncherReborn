@@ -1,8 +1,8 @@
 #include "directorylist.h"
 
-QVector<QString> DirectoryList::scan(const QString &dir, QStringList ext)
+QStringList DirectoryList::scan(const QString &dir, const QStringList &ext)
 {
-    QVector<QString> tmp;
+    QStringList tmp;
 
     QDirIterator it(dir, ext, QDir::Files);
     while (it.hasNext())
