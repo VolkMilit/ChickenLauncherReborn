@@ -54,6 +54,8 @@ void MainWindow::populateProfilesTable()
             TableHelper::addItem(ui->tw_profiles, ":/darkplaces.svg", profile.baseName(), port);
         else if (port == "UHexen2")
             TableHelper::addItem(ui->tw_profiles, ":/uhexen2.svg", profile.baseName(), port);
+        else if (port == "dhewm3")
+            TableHelper::addItem(ui->tw_profiles, ":/dhewm3.svg", profile.baseName(), port);
     }
 }
 
