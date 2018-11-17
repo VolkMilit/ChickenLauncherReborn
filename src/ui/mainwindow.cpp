@@ -30,7 +30,7 @@ void MainWindow::on_btn_profiles_new_clicked()
     bool ok = dialog.exec();
 
     if (ok)
-        TableHelper::addItem(ui->tw_profiles, ":/doom.png", dialog.getName(), dialog.getPort());
+        TableHelper::addItem(ui->tw_profiles, ":/gzdoom.svg", dialog.getName(), dialog.getPort());
 
     dialog.done(0);
 }
@@ -48,7 +48,12 @@ void MainWindow::populateProfilesTable()
 
         QFileInfo profile(profileRow.remove(".ini"));
 
-        TableHelper::addItem(ui->tw_profiles, ":/doom.png", profile.baseName(), port);
+        if (port == "GZDoom")
+            TableHelper::addItem(ui->tw_profiles, ":/gzdoom.svg", profile.baseName(), port);
+        else if (port == "Darkplaces")
+            TableHelper::addItem(ui->tw_profiles, ":/darkplaces.svg", profile.baseName(), port);
+        else if (port == "UHexen2")
+            TableHelper::addItem(ui->tw_profiles, ":/uhexen2.svg", profile.baseName(), port);
     }
 }
 
@@ -165,8 +170,8 @@ void MainWindow::on_btn_profiles_load_clicked()
     font.setBold(true);
     int row = ui->tw_profiles->currentRow();
 
-    settings->setCurrentProfile(ui->tw_profiles->item(row, 0)->text());
-    ui->tw_profiles->item(row, 0)->setFont(font);
+    settings->setCurrentProfile(ui->tw_profiles->item(row, 1)->text());
+    //ui->tw_profiles->item(row, 0)->setFont(font);
     ui->tw_profiles->item(row, 1)->setFont(font);
 
     checkedItems.clear();

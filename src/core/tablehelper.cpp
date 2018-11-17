@@ -5,8 +5,8 @@
 
 void TableHelper::addItem(QTableWidget *widget, const QString &icon, const QString &item1, const QString &item2)
 {
-    QTableWidgetItem *witem0 = new QTableWidgetItem(item1);
-    QTableWidgetItem *witem1 = new QTableWidgetItem(item2);
+    QTableWidgetItem *witem0 = new QTableWidgetItem();
+    QTableWidgetItem *witem1 = new QTableWidgetItem(item1);
 
     witem0->setIcon(QIcon(icon));
 
@@ -30,10 +30,10 @@ void TableHelper::selectItem(QTableWidget *widget, const QString &item)
 
     for (auto i = 0; i < widget->rowCount(); i++)
     {
-        if (widget->item(i, 0)->text() == item)
+        if (widget->item(i, 1)->text() == item)
         {
             widget->selectRow(i);
-            widget->item(i, 0)->setFont(font);
+            //widget->item(i, 0)->setFont(font);
             widget->item(i, 1)->setFont(font);
         }
     }
