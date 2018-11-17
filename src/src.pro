@@ -31,7 +31,12 @@ SOURCES += main.cpp\
     core/tablehelper.cpp \
     core/listhelper.cpp \
     games/gzdoom.cpp \
-    ui/aboutdialog.cpp
+    ui/aboutdialog.cpp \
+    ui/tab_profiles.cpp \
+    ui/tab_wads.cpp \
+    ui/tab_settings.cpp \
+    ui/tab_advanced.cpp \
+    ui/tab_network.cpp
 
 HEADERS  += ui/mainwindow.h \
             ui/newprofiledialog.h \

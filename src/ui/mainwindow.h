@@ -9,6 +9,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QTextStream>
 
 #include "ui/newprofiledialog.h"
 #include "ui/aboutdialog.h"
