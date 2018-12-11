@@ -52,7 +52,7 @@ void Gzdoom::start()
     qDebug() << executable->readAllStandardOutput();*/
 
     if (executable->error() == QProcess::Crashed)
-        QMessageBox::critical(0, "Error!", executable->errorString(), QMessageBox::Ok);
+        QMessageBox::critical(nullptr, "Error!", executable->errorString(), QMessageBox::Ok);
 }
 
 void Gzdoom::processOut()

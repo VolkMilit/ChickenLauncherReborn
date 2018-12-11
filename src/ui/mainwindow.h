@@ -27,7 +27,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
     public:
-        explicit MainWindow(QWidget *parent = 0);
+        explicit MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
 
     private slots:
@@ -36,7 +36,6 @@ class MainWindow : public QMainWindow
         void on_btn_profiles_delete_clicked();
         void on_btn_profiles_clone_clicked();
         void on_lw_iwad_itemActivated(QListWidgetItem *item);
-        void on_lw_pwad_itemChanged();
         void on_le_iwaddir_textChanged();
         void on_le_pwaddir_textChanged();
         void on_btn_pwad_up_clicked();
@@ -57,7 +56,7 @@ class MainWindow : public QMainWindow
         void on_actionAbout_Chicken_Launcher_triggered();
 
 private:
-        Ui::MainWindow *ui;
+        Ui::MainWindow ui;
 
         void setupWindow();
         void populateProfilesTable();
@@ -69,8 +68,6 @@ private:
         void readSettings();
 
         Settings *settings;
-
-        QStringList checkedItems;
 };
 
 #endif // MAINWINDOW_H

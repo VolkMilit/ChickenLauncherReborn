@@ -13,7 +13,7 @@ class newProfileDialog : public QDialog
     Q_OBJECT
 
     public:
-        explicit newProfileDialog(QWidget *parent = 0);
+        explicit newProfileDialog(QWidget *parent = nullptr);
         ~newProfileDialog();
 
         QString getName();

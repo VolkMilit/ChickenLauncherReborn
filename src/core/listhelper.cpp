@@ -1,5 +1,4 @@
 #include "listhelper.h"
-#include <QDebug>
 
 void ListHelper::addItem(QListWidget *widget, const QString &item)
 {
@@ -10,6 +9,14 @@ void ListHelper::addItem(QListWidget *widget, const QString &item, Qt::CheckStat
 {
     QListWidgetItem *witem = new QListWidgetItem(item);
     witem->setCheckState(checked);
+
+    if (checked == Qt::Checked)
+    {
+        QFont font;
+        font.setBold(true);
+        witem->setFont(font);
+    }
+
     widget->addItem(witem);
 }
 

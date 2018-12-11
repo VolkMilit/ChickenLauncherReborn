@@ -4,7 +4,7 @@ void MainWindow::populateConfigList()
 {
     const QStringList &scan = DirectoryList::scan(GamesPaths::getGzdoomDir(), QStringList() << "*.ini");
 
-    ListHelper::addItem(ui->lw_port_config, "[default]");
+    ListHelper::addItem(ui.lw_port_config, "[default]");
 
     for (const QString &item : scan)
     {
@@ -13,7 +13,7 @@ void MainWindow::populateConfigList()
         if (file.baseName() == "zdoom" || file.baseName() == "gzdoom")
             continue;
 
-        ListHelper::addItem(ui->lw_port_config, file.baseName());
+        ListHelper::addItem(ui.lw_port_config, file.baseName());
     }
 }
 
@@ -49,13 +49,13 @@ void MainWindow::on_btn_config_new_clicked()
             QTextStream stream(&file);
             stream << "" << endl;
         }
-        ListHelper::addItem(ui->lw_port_config, text);
+        ListHelper::addItem(ui.lw_port_config, text);
     }
 }
 
 void MainWindow::on_btn_config_rename_clicked()
 {
-    QListWidgetItem *item = ui->lw_port_config->currentItem();
+    QListWidgetItem *item = ui.lw_port_config->currentItem();
 
     if (!item)
         return;
@@ -84,7 +84,7 @@ void MainWindow::on_btn_config_rename_clicked()
 
 void MainWindow::on_btn_config_delete_clicked()
 {
-    QListWidgetItem *item = ui->lw_port_config->currentItem();
+    QListWidgetItem *item = ui.lw_port_config->currentItem();
 
     if (!item)
         return;
@@ -137,7 +137,7 @@ void MainWindow::on_btn_iwad_chooser_clicked()
     if (dir.isEmpty())
         return;
 
-    ui->le_iwaddir->setText(dir);
+    ui.le_iwaddir->setText(dir);
 }
 
 void MainWindow::on_btn_pwad_chooser_clicked()
@@ -149,7 +149,7 @@ void MainWindow::on_btn_pwad_chooser_clicked()
     if (dir.isEmpty())
         return;
 
-    ui->le_pwaddir->setText(dir);
+    ui.le_pwaddir->setText(dir);
 }
 
 void MainWindow::on_btn_exe_chooser_clicked()
@@ -161,5 +161,5 @@ void MainWindow::on_btn_exe_chooser_clicked()
     if (dir.isEmpty())
         return;
 
-    ui->le_executablepath->setText(dir);
+    ui.le_executablepath->setText(dir);
 }

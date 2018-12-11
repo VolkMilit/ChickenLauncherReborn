@@ -47,7 +47,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QTableWidget" name="tw_profiles">
+         <widget class="QListWidget" name="tw_profiles">
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
@@ -60,28 +60,6 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-          <property name="showGrid">
-           <bool>false</bool>
-          </property>
-          <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>215</number>
-          </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>Profile</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Game</string>
-           </property>
-          </column>
          </widget>
         </item>
         <item>

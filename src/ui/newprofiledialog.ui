@@ -66,6 +66,11 @@
          <string>UHexen2</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>dhewm3</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
