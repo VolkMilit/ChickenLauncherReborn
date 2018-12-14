@@ -32,6 +32,10 @@ void Gzdoom::start()
     if (!params.address.isEmpty())
         join = " -join " + params.address;
 
+    QString config = "";
+    if (!params.config.isEmpty())
+        config = " -config " + params.config;
+
     QProcess *executable = new QProcess(this);
     executable->setEnvironment(QProcess::systemEnvironment());
     executable->setProcessChannelMode(QProcess::MergedChannels);
@@ -42,7 +46,7 @@ void Gzdoom::start()
                       " -IWAD " + params.iwad +\
                       " -file " + pwads +\
                       map + skill +\
-                      join);
+                      join + config);
 
     executable->waitForStarted();
 

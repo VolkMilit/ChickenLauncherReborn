@@ -56,8 +56,7 @@ void MainWindow::writeSettings()
     settings->setExePath(ui.le_executablepath->text());
 
     QListWidgetItem *configitem = ui.lw_port_config->currentItem();
-    if (configitem != nullptr && configitem->text() != "[default]")
-        settings->setConfigFile(configitem->text());
+    settings->setConfigFile(configitem->text());
 
     delete iwaditem;
     delete configitem;
@@ -85,6 +84,7 @@ void MainWindow::on_btn_ripandtear_clicked()
     gzdoom->setIwad(ui.lw_iwad->currentItem()->text());
     gzdoom->setPwads(ListHelper::getCheckedItems(ui.lw_pwad));
     gzdoom->setMap(ui.le_gz_map->text());
+    gzdoom->setConfig(GamesPaths::getGzdoomDir() + "/" + ui.lw_port_config->currentItem()->text() + ".ini");
 
     if (ui.cb_gz_skill->isChecked())
         gzdoom->setSkill(ui.comb_gz_skill->currentIndex());

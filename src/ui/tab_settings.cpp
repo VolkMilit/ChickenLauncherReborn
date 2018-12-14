@@ -4,15 +4,9 @@ void MainWindow::populateConfigList()
 {
     const QStringList &scan = DirectoryList::scan(GamesPaths::getGzdoomDir(), QStringList() << "*.ini");
 
-    ListHelper::addItem(ui.lw_port_config, "[default]");
-
     for (const QString &item : scan)
     {
         QFileInfo file(item);
-
-        if (file.baseName() == "zdoom" || file.baseName() == "gzdoom")
-            continue;
-
         ListHelper::addItem(ui.lw_port_config, file.baseName());
     }
 }

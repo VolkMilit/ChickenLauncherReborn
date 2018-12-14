@@ -11,7 +11,7 @@ class Gzdoom : public QObject
     Q_OBJECT
 
     public:
-        Gzdoom(QObject *parent = 0);
+        Gzdoom(QObject *parent = nullptr);
         virtual ~Gzdoom();
 
         void setIwad(const QString &iwad);
