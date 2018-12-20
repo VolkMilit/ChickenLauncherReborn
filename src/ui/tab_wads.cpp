@@ -15,6 +15,8 @@ void MainWindow::populateIwadList()
             ListHelper::addItem(ui.lw_iwad, item, ":/doom2.png");
         else if (!fi.baseName().compare("doom", Qt::CaseInsensitive))
             ListHelper::addItem(ui.lw_iwad, item, ":/doom.png");
+        else
+            ListHelper::addItem(ui.lw_iwad, item, ":/unknown.png");
     }
 }
 

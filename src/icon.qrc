@@ -18,5 +18,7 @@
      <file alias="uhexen2.svg">images/logos/uhexen2.svg</file>
      <file>images/logos/dhewm3.svg</file>
      <file alias="dhewm3.svg">images/logos/dhewm3.svg</file>
+     <file>images/logos/unknown.png</file>
+     <file alias="unknown.png">images/logos/unknown.png</file>
  </qresource>
  </RCC>
